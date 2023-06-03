@@ -22,3 +22,6 @@ sudo apt install python3-cbor python3-zmq python3-opencv
 export COPPELIA=$HOME/Escritorio/robotica/coppeliaSim
 # Coppelia Python Dependencies Path
 export PYTHONPATH=$COPPELIA/programming/zmqRemoteApi/clients/python
+
+# Scripts Path
+export SCRIPTS=$HOME/Escritorio/robotica/robotica-master/coppelia/zmqRemoteApi/python
