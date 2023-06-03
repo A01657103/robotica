@@ -17,7 +17,7 @@
 
 # Install dependencies
 sudo apt update
-sudo apt install python3-cbor python3-zmq
+sudo apt install python3-cbor python3-zmq python3-opencv
 # Coppelia Path
 export COPPELIA=$HOME/Escritorio/robotica/coppeliaSim
 # Coppelia Python Dependencies Path
