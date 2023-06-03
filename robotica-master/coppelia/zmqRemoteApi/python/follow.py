@@ -25,7 +25,7 @@ import cv2
 import robotica
 
 
-def detect_red_ball(self, img):
+def detect_red_ball(img):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
     # Define the color range for red in HSV
