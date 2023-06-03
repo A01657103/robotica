@@ -24,9 +24,34 @@ import numpy as np
 import cv2
 import robotica
 
+
+def detect_red_ball(self, img):
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+    # Define the color range for red in HSV
+    lower_red = np.array([0, 70, 50])
+    upper_red = np.array([10, 255, 255])
+
+    mask = cv2.inRange(hsv, lower_red, upper_red)
+    mask = cv2.dilate(mask, None, iterations=2)
+
+    contours, _ = cv2.findContours(
+        mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    center = None
+    if len(contours) > 0:
+        # Find the largest contour
+        c = max(contours, key=cv2.contourArea)
+        ((x, y), radius) = cv2.minEnclosingCircle(c)
+        M = cv2.moments(c)
+        if M["m00"] > 0:
+            center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+        else:
+            center = None
+
+    return center
+
+
 # Define PID controller
-
-
 class PIDController:
     def __init__(self, Kp, Ki, Kd, dt):
         self.Kp = Kp
@@ -56,7 +81,7 @@ def main(args=None):
     while coppelia.is_running():
         img = robot.get_image()
         # Assume that the ball is the largest red object in the image
-        ball_position = robot.detect_red_ball(img)
+        ball_position = detect_red_ball(img)
         # The error is the horizontal distance of the ball from the center of the image
         error = img.shape[1]/2 - ball_position[0]
         speed = pid.compute(error)
