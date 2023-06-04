@@ -35,7 +35,7 @@ def detect_ball(robot):
     # Center coordinates
     cx, cy = 0, 0
     # Default moment dictionary with "m00" set to prevent division by zero
-    M = {"m00": 1}
+    M = {"m00": 0}
     # Draw the contours on the image
     for contour in contours:
         # Calculate image moments of the detected contour
@@ -70,9 +70,8 @@ def get_speed(cx, area):
     # Set the speed of the robot
     speed = default_speed
     # If the area is greater than the max area, slow down the robot
-    print(area)
     if area > max_area:
-        speed = default_speed - 1
+        speed = default_speed - 2
     # Compute the error between the desired cx (center) and the current cx
     error = (128 - cx) / 128
     # Adjustment
@@ -123,7 +122,9 @@ def main(args=None):
         img, cx, area = detect_ball(robot)
         # Show the masked image of the ball
         show_image(img)
-        # Calculate the left and right speed
+        # Is the ball visible?
+        lspeed, rspeed = 0, 0
+        # Follow the ball
         lspeed, rspeed = get_speed(cx, area)
         # Set the speed of the robot
         robot.set_speed(lspeed, rspeed)

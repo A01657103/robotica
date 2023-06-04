@@ -24,14 +24,17 @@ import robotica
 
 
 def avoid(readings):
-    if (readings[3] < 0.1) or (readings[4] < 0.2):
-        lspeed, rspeed = +0.1, -0.8
-    elif readings[1] < 0.1:
-        lspeed, rspeed = +1.3, +0.6
-    elif readings[5] < 0.4:
-        lspeed, rspeed = +0.1, +0.9
+    print(readings)
+    if (readings[3] < 1) or (readings[4] < 1):
+        lspeed, rspeed = +1, -1
+    elif readings[1] < 0.2:
+        lspeed, rspeed = +0.4, +0.1
+    elif readings[0] < 0.4:
+        lspeed, rspeed = +0.1, +0.4
+    elif readings[15] < 0.4:
+        lspeed, rspeed = +0.1, +0.4
     else:
-        lspeed, rspeed = +1.5, +1.5
+        lspeed, rspeed = +1, -1
     return lspeed, rspeed
 
 
